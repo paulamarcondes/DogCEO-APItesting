@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.13.3 on win32)" generated="2025-05-18T21:27:22.696148" rpa="false" schemaversion="5">
+<suite id="s1" name="Batch1 Tests" source="C:\Projects\DogCEO\batch1_tests.robot">
+<test id="s1-t1" name="QA-001 - Validate Random Dog Image Endpoint" line="10">
+<kw name="Return Random Dog Image" owner="keywords">
+<kw name="GET" owner="RequestsLibrary">
+<msg time="2025-05-18T21:27:23.668361" level="INFO">GET Request : url=https://dog.ceo/api/breeds/image/random 
+ path_url=/api/breeds/image/random 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-05-18T21:27:23.668671" level="INFO">GET Response : url=https://dog.ceo/api/breeds/image/random 
+ status=200, reason=OK 
+ headers={'Date': 'Mon, 19 May 2025 00:28:07 GMT', 'Content-Type': 'application/json', 'Content-Length': '112', 'Connection': 'keep-alive', 'Server': 'cloudflare', 'X-Powered-By': 'PHP/8.1.32', 'Cache-Control': 'no-cache, private', 'Access-Control-Allow-Origin': '*', 'Content-Encoding': 'gzip', 'Via': '1.1 varnish (Varnish/6.3), 1.1 varnish (Varnish/6.3)', 'X-Cache-Hits': '0', 'X-Cache': 'MISS', 'Accept-Ranges': 'bytes', 'Age': '0', 'Vary': 'Accept-Encoding', 'Nel': '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}', 'Cf-Cache-Status': 'DYNAMIC', 'Report-To': '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=h2RjUalY3LLbrwFv5UU7xPoaSnN8Nj7cZXWqjrnmkW%2FTU26by4wGTtuhvWnyO5%2FSTAn5S7ScZBdcx7lxZAagOPlE%2FsDRAVqepJqXGawt%2Bk39"}]}', 'CF-RAY': '941f78ed69d564a9-GIG', 'alt-svc': 'h3=":443"; ma=86400'} 
+ body={"message":"https:\/\/images.dog.ceo\/breeds\/poodle-miniature\/n02113712_3790.jpg","status":"success"} 
+ </msg>
+<msg time="2025-05-18T21:27:23.668961" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}/${GET_RANIMAGE}</arg>
+<doc>Sends a GET request.</doc>
+<status status="PASS" start="2025-05-18T21:27:23.025605" elapsed="0.643419"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-18T21:27:23.669819" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<arg>${response}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-18T21:27:23.669408" elapsed="0.000516"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-18T21:27:23.671377" level="INFO">Random Dog Image Endpoint Response: {'message': 'https://images.dog.ceo/breeds/poodle-miniature/n02113712_3790.jpg', 'status': 'success'}</msg>
+<arg>Random Dog Image Endpoint Response: ${response.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-18T21:27:23.670164" elapsed="0.001315"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:23.025181" elapsed="0.646435"/>
+</kw>
+<kw name="Validate 200 Response" owner="keywords">
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-05-18T21:27:23.684858" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-05-18T21:27:23.684407" elapsed="0.000521"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-18T21:27:23.685106" level="INFO">Status Code 200 Validated.</msg>
+<arg>Status Code 200 Validated.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-18T21:27:23.685031" elapsed="0.000115"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:23.684122" elapsed="0.001077"/>
+</kw>
+<kw name="Confirm JPG Presence" owner="keywords">
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${response.text}</arg>
+<arg>.jpg</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-05-18T21:27:23.691416" elapsed="0.000534"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-18T21:27:23.692175" level="INFO">Presence of JPG Image Validated.</msg>
+<arg>Presence of JPG Image Validated.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-18T21:27:23.692067" elapsed="0.000163"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:23.691117" elapsed="0.001168"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:23.024446" elapsed="0.668017"/>
+</test>
+<test id="s1-t2" name="QA-002 - Verify List of All Breeds" line="15">
+<kw name="Return List of All Breeds" owner="keywords">
+<kw name="GET" owner="RequestsLibrary">
+<msg time="2025-05-18T21:27:24.131993" level="INFO">GET Request : url=https://dog.ceo/api/breeds/list/all 
+ path_url=/api/breeds/list/all 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-05-18T21:27:24.132160" level="INFO">GET Response : url=https://dog.ceo/api/breeds/list/all 
+ status=200, reason=OK 
+ headers={'Date': 'Mon, 19 May 2025 00:28:07 GMT', 'Content-Type': 'application/json', 'Content-Length': '1035', 'Connection': 'keep-alive', 'Server': 'cloudflare', 'X-Powered-By': 'PHP/8.1.32', 'Access-Control-Allow-Origin': '*', 'Content-Encoding': 'gzip', 'Via': '1.1 varnish (Varnish/6.3), 1.1 varnish (Varnish/6.3)', 'Cache-Control': 'max-age=1800', 'X-Cache-Age': '11546', 'X-Cache-Hits': '1232', 'X-Cache': 'HIT', 'Accept-Ranges': 'bytes', 'Age': '0', 'Vary': 'Accept-Encoding', 'Nel': '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}', 'Cf-Cache-Status': 'DYNAMIC', 'Report-To': '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=iD8ADXPJMA7o8sczLEYVkBUpVzYxlDLVj34Vaj%2BKuUhxI4aJoLqsj89cxmUYBQf3cyGq7s%2FX86sPtYQmDrj4dovKvLvxAKeGbZx%2Flo0mMX5Rk4M%3D"}]}', 'CF-RAY': '941f78f0fd9cf229-GRU', 'alt-svc': 'h3=":443"; ma=86400'} 
+ body={"message":{"affenpinscher":[],"african":[],"airedale":[],"akita":[],"appenzeller":[],"australian":["kelpie","shepherd"],"bakharwal":["indian"],"basenji":[],"beagle":[],"bluetick":[],"borzoi":[],"bouvier":[],"boxer":[],"brabancon":[],"briard":[],"buhund":["norwegian"],"bulldog":["boston","english","french"],"bullterrier":["staffordshire"],"cattledog":["australian"],"cavapoo":[],"chihuahua":[],"chippiparai":["indian"],"chow":[],"clumber":[],"cockapoo":[],"collie":["border"],"coonhound":[],"corgi":["cardigan"],"cotondetulear":[],"dachshund":[],"dalmatian":[],"dane":["great"],"danish":["swedish"],"deerhound":["scottish"],"dhole":[],"dingo":[],"doberman":[],"elkhound":["norwegian"],"entlebucher":[],"eskimo":[],"finnish":["lapphund"],"frise":["bichon"],"gaddi":["indian"],"germanshepherd":[],"greyhound":["indian","italian"],"groenendael":[],"havanese":[],"hound":["afghan","basset","blood","english","ibizan","plott","walker"],"husky":[],"keeshond":[],"kelpie":[],"kombai":[],"komondor":[],"kuvasz":[],"labradoodle":[],"labrador":[],"leonberg":[],"lhasa":[],"malamute":[],"malinois":[],"maltese":[],"mastiff":["bull","english","indian","tibetan"],"mexicanhairless":[],"mix":[],"mountain":["bernese","swiss"],"mudhol":["indian"],"newfoundland":[],"otterhound":[],"ovcharka":["caucasian"],"papillon":[],"pariah":["indian"],"pekinese":[],"pembroke":[],"pinscher":["miniature"],"pitbull":[],"pointer":["german","germanlonghair"],"pomeranian":[],"poodle":["medium","miniature","standard","toy"],"pug":[],"puggle":[],"pyrenees":[],"rajapalayam":["indian"],"redbone":[],"retriever":["chesapeake","curly","flatcoated","golden"],"ridgeback":["rhodesian"],"rottweiler":[],"saluki":[],"samoyed":[],"schipperke":[],"schnauzer":["giant","miniature"],"segugio":["italian"],"setter":["english","gordon","irish"],"sharpei":[],"sheepdog":["english","indian","shetland"],"shiba":[],"shihtzu":[],"spaniel":["blenheim","brittany","cocker","irish","japanese","sussex","welsh"],"spitz":["indian","japanese"],"springer":["english"],"stbernard":[],"terrier":["american","australian","bedlington","border","cairn","dandie","fox","irish","kerryblue","lakeland","norfolk","norwich","patterdale","russell","scottish","sealyham","silky","tibetan","toy","welsh","westhighland","wheaten","yorkshire"],"tervuren":[],"vizsla":[],"waterdog":["spanish"],"weimaraner":[],"whippet":[],"wolfhound":["irish"]},"status":"success"} 
+ </msg>
+<msg time="2025-05-18T21:27:24.132721" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}/${GET_ALLBREEDS}</arg>
+<doc>Sends a GET request.</doc>
+<status status="PASS" start="2025-05-18T21:27:23.695085" elapsed="0.437690"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-18T21:27:24.133319" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<arg>${response}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-18T21:27:24.133018" elapsed="0.000369"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:23.694797" elapsed="0.438682"/>
+</kw>
+<kw name="Validate 200 Response" owner="keywords">
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-05-18T21:27:24.135730" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-05-18T21:27:24.135037" elapsed="0.000799"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-18T21:27:24.136163" level="INFO">Status Code 200 Validated.</msg>
+<arg>Status Code 200 Validated.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-18T21:27:24.136030" elapsed="0.000188"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:24.134659" elapsed="0.001631"/>
+</kw>
+<kw name="Verify All Breeds Dictionary" owner="keywords">
+<kw name="Convert To Dictionary" owner="Collections">
+<msg time="2025-05-18T21:27:24.137772" level="INFO">${all_breeds} = {'message': {'affenpinscher': [], 'african': [], 'airedale': [], 'akita': [], 'appenzeller': [], 'australian': ['kelpie', 'shepherd'], 'bakharwal': ['indian'], 'basenji': [], 'beagle': [], 'bluetick':...</msg>
+<var>${all_breeds}</var>
+<arg>${response.json()}</arg>
+<doc>Converts the given ``item`` to a Python ``dict`` type.</doc>
+<status status="PASS" start="2025-05-18T21:27:24.136911" elapsed="0.000909"/>
+</kw>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<msg time="2025-05-18T21:27:24.138547" level="INFO">Length is 107.</msg>
+<arg>${all_breeds['message']}</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="PASS" start="2025-05-18T21:27:24.137978" elapsed="0.000629"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-18T21:27:24.138948" level="INFO">Dictionary {'message': {'affenpinscher': [], 'african': [], 'airedale': [], 'akita': [], 'appenzeller': [], 'australian': ['kelpie', 'shepherd'], 'bakharwal': ['indian'], 'basenji': [], 'beagle': [], 'bluetick': [], 'borzoi': [], 'bouvier': [], 'boxer': [], 'brabancon': [], 'briard': [], 'buhund': ['norwegian'], 'bulldog': ['boston', 'english', 'french'], 'bullterrier': ['staffordshire'], 'cattledog': ['australian'], 'cavapoo': [], 'chihuahua': [], 'chippiparai': ['indian'], 'chow': [], 'clumber': [], 'cockapoo': [], 'collie': ['border'], 'coonhound': [], 'corgi': ['cardigan'], 'cotondetulear': [], 'dachshund': [], 'dalmatian': [], 'dane': ['great'], 'danish': ['swedish'], 'deerhound': ['scottish'], 'dhole': [], 'dingo': [], 'doberman': [], 'elkhound': ['norwegian'], 'entlebucher': [], 'eskimo': [], 'finnish': ['lapphund'], 'frise': ['bichon'], 'gaddi': ['indian'], 'germanshepherd': [], 'greyhound': ['indian', 'italian'], 'groenendael': [], 'havanese': [], 'hound': ['afghan', 'basset', 'blood', 'english', 'ibizan', 'plott', 'walker'], 'husky': [], 'keeshond': [], 'kelpie': [], 'kombai': [], 'komondor': [], 'kuvasz': [], 'labradoodle': [], 'labrador': [], 'leonberg': [], 'lhasa': [], 'malamute': [], 'malinois': [], 'maltese': [], 'mastiff': ['bull', 'english', 'indian', 'tibetan'], 'mexicanhairless': [], 'mix': [], 'mountain': ['bernese', 'swiss'], 'mudhol': ['indian'], 'newfoundland': [], 'otterhound': [], 'ovcharka': ['caucasian'], 'papillon': [], 'pariah': ['indian'], 'pekinese': [], 'pembroke': [], 'pinscher': ['miniature'], 'pitbull': [], 'pointer': ['german', 'germanlonghair'], 'pomeranian': [], 'poodle': ['medium', 'miniature', 'standard', 'toy'], 'pug': [], 'puggle': [], 'pyrenees': [], 'rajapalayam': ['indian'], 'redbone': [], 'retriever': ['chesapeake', 'curly', 'flatcoated', 'golden'], 'ridgeback': ['rhodesian'], 'rottweiler': [], 'saluki': [], 'samoyed': [], 'schipperke': [], 'schnauzer': ['giant', 'miniature'], 'segugio': ['italian'], 'setter': ['english', 'gordon', 'irish'], 'sharpei': [], 'sheepdog': ['english', 'indian', 'shetland'], 'shiba': [], 'shihtzu': [], 'spaniel': ['blenheim', 'brittany', 'cocker', 'irish', 'japanese', 'sussex', 'welsh'], 'spitz': ['indian', 'japanese'], 'springer': ['english'], 'stbernard': [], 'terrier': ['american', 'australian', 'bedlington', 'border', 'cairn', 'dandie', 'fox', 'irish', 'kerryblue', 'lakeland', 'norfolk', 'norwich', 'patterdale', 'russell', 'scottish', 'sealyham', 'silky', 'tibetan', 'toy', 'welsh', 'westhighland', 'wheaten', 'yorkshire'], 'tervuren': [], 'vizsla': [], 'waterdog': ['spanish'], 'weimaraner': [], 'whippet': [], 'wolfhound': ['irish']}, 'status': 'success'} has key "message".</msg>
+<arg>Dictionary ${all_breeds} has key "message".</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-18T21:27:24.138745" elapsed="0.000269"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:24.136615" elapsed="0.002467"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:23.693120" elapsed="0.448704"/>
+</test>
+<test id="s1-t3" name="QA-003 - Test Sub-Breeds of Bulldog" line="20">
+<kw name="Return Specific Breed List" owner="keywords">
+<kw name="GET" owner="RequestsLibrary">
+<msg time="2025-05-18T21:27:24.610903" level="INFO">GET Request : url=https://dog.ceo/api/breed/bulldog/list 
+ path_url=/api/breed/bulldog/list 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-05-18T21:27:24.611095" level="INFO">GET Response : url=https://dog.ceo/api/breed/bulldog/list 
+ status=200, reason=OK 
+ headers={'Date': 'Mon, 19 May 2025 00:28:08 GMT', 'Content-Type': 'application/json', 'Content-Length': '77', 'Connection': 'keep-alive', 'Server': 'cloudflare', 'X-Powered-By': 'PHP/8.1.32', 'Access-Control-Allow-Origin': '*', 'Content-Encoding': 'gzip', 'Via': '1.1 varnish (Varnish/6.3), 1.1 varnish (Varnish/6.3)', 'Cache-Control': 'max-age=1800', 'X-Cache-Age': '9627', 'X-Cache-Hits': '11', 'X-Cache': 'HIT', 'Accept-Ranges': 'bytes', 'Age': '0', 'Vary': 'Accept-Encoding', 'Nel': '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}', 'Cf-Cache-Status': 'DYNAMIC', 'Report-To': '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=C1Q0dx7rl8a6Iqr7FpyJWzhdV%2BoOcADXF%2Fwu4xx5uuT%2FmdVusYlFskGPHvw2pEWv%2F%2B4BcFjQ1aHelsHY5qsBS0DmOhI331JBaVXsqTZSINTDHgI%3D"}]}', 'CF-RAY': '941f78f3f8ddf177-GRU', 'alt-svc': 'h3=":443"; ma=86400'} 
+ body={"message":["boston","english","french"],"status":"success"} 
+ </msg>
+<msg time="2025-05-18T21:27:24.611316" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}/${GET_SPECIFIC_BREED}</arg>
+<doc>Sends a GET request.</doc>
+<status status="PASS" start="2025-05-18T21:27:24.144196" elapsed="0.467168"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-18T21:27:24.612274" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<arg>${response}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-18T21:27:24.611819" elapsed="0.000560"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-18T21:27:24.613782" level="INFO">Specific Breed List: {'message': ['boston', 'english', 'french'], 'status': 'success'}</msg>
+<arg>Specific Breed List: ${response.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-18T21:27:24.612644" elapsed="0.001224"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:24.143910" elapsed="0.470258"/>
+</kw>
+<kw name="Validate 200 Response" owner="keywords">
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-05-18T21:27:24.615868" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-05-18T21:27:24.615218" elapsed="0.000743"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-18T21:27:24.616278" level="INFO">Status Code 200 Validated.</msg>
+<arg>Status Code 200 Validated.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-18T21:27:24.616150" elapsed="0.000180"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:24.614716" elapsed="0.001685"/>
+</kw>
+<kw name="List Sub-Breed Inside Breeds" owner="keywords">
+<kw name="Convert To Dictionary" owner="Collections">
+<msg time="2025-05-18T21:27:24.617646" level="INFO">${all_specifics} = {'message': ['boston', 'english', 'french'], 'status': 'success'}</msg>
+<var>${all_specifics}</var>
+<arg>${response.json()}</arg>
+<doc>Converts the given ``item`` to a Python ``dict`` type.</doc>
+<status status="PASS" start="2025-05-18T21:27:24.617019" elapsed="0.000660"/>
+</kw>
+<kw name="List Should Contain Sub List" owner="Collections">
+<arg>${all_specifics['message']}</arg>
+<arg>${LIST_BULLDOGS}</arg>
+<doc>Fails if not all elements in ``list2`` are found in ``list1``.</doc>
+<status status="PASS" start="2025-05-18T21:27:24.617806" elapsed="0.000561"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-18T21:27:24.618680" level="INFO">Sub-Breeds ['boston', 'english', 'french'] Present Inside Breed bulldog.</msg>
+<arg>Sub-Breeds ${LIST_BULLDOGS} Present Inside Breed ${SPECIFIC_BREED}.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-18T21:27:24.618506" elapsed="0.000224"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:24.616727" elapsed="0.002064"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:24.143435" elapsed="0.475579"/>
+</test>
+<test id="s1-t4" name="QA-004 - Get Random Image from Specific Breed (Hound)" line="25">
+<kw name="Return Specific Breed Image" owner="keywords">
+<kw name="GET" owner="RequestsLibrary">
+<msg time="2025-05-18T21:27:25.099902" level="INFO">GET Request : url=https://dog.ceo/api/breed/hound/images/random 
+ path_url=/api/breed/hound/images/random 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-05-18T21:27:25.099986" level="INFO">GET Response : url=https://dog.ceo/api/breed/hound/images/random 
+ status=200, reason=OK 
+ headers={'Date': 'Mon, 19 May 2025 00:28:08 GMT', 'Content-Type': 'application/json', 'Content-Length': '112', 'Connection': 'keep-alive', 'Server': 'cloudflare', 'X-Powered-By': 'PHP/8.1.32', 'Cache-Control': 'no-cache, private', 'Access-Control-Allow-Origin': '*', 'Content-Encoding': 'gzip', 'Via': '1.1 varnish (Varnish/6.3), 1.1 varnish (Varnish/6.3)', 'X-Cache-Hits': '0', 'X-Cache': 'MISS', 'Accept-Ranges': 'bytes', 'Age': '0', 'Vary': 'Accept-Encoding', 'Nel': '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}', 'Cf-Cache-Status': 'DYNAMIC', 'Report-To': '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=PrIf54vAn%2F%2Bc9kKJt3rcIldhjTxuLq0WKN0%2FV8NTTxvTF3wnkq3VybzyQCwtjz87uEnBIBICD8JqlcVtPlKzTGO2SLEat79rnRYmcFj%2B11E6g9Q%3D"}]}', 'CF-RAY': '941f78f6c9431cf3-GRU', 'alt-svc': 'h3=":443"; ma=86400'} 
+ body={"message":"https:\/\/images.dog.ceo\/breeds\/hound-afghan\/n02088094_13145.jpg","status":"success"} 
+ </msg>
+<msg time="2025-05-18T21:27:25.100084" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}/${GET_BREED_IMAGE}</arg>
+<doc>Sends a GET request.</doc>
+<status status="PASS" start="2025-05-18T21:27:24.620414" elapsed="0.479687"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-18T21:27:25.100371" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<arg>${response}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-18T21:27:25.100236" elapsed="0.000164"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-18T21:27:25.100574" level="INFO">Image For Specific Breed: hound</msg>
+<arg>Image For Specific Breed: ${SPECIFIC_BREED_IMAGE}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-18T21:27:25.100472" elapsed="0.000131"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:24.620051" elapsed="0.480592"/>
+</kw>
+<kw name="Validate 200 Response" owner="keywords">
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-05-18T21:27:25.101519" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-05-18T21:27:25.101155" elapsed="0.000411"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-18T21:27:25.101697" level="INFO">Status Code 200 Validated.</msg>
+<arg>Status Code 200 Validated.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-18T21:27:25.101643" elapsed="0.000078"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:25.100915" elapsed="0.000841"/>
+</kw>
+<kw name="Confirm URL Contains Breed In Path" owner="keywords">
+<kw name="Convert To Dictionary" owner="Collections">
+<msg time="2025-05-18T21:27:25.102479" level="INFO">${breed_image} = {'message': 'https://images.dog.ceo/breeds/hound-afghan/n02088094_13145.jpg', 'status': 'success'}</msg>
+<var>${breed_image}</var>
+<arg>${response.json()}</arg>
+<doc>Converts the given ``item`` to a Python ``dict`` type.</doc>
+<status status="PASS" start="2025-05-18T21:27:25.102125" elapsed="0.000376"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${breed_image['message']}</arg>
+<arg>${SPECIFIC_BREED_IMAGE}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-05-18T21:27:25.102582" elapsed="0.000300"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-18T21:27:25.103039" level="INFO">URL Path Contains: hound</msg>
+<arg>URL Path Contains: ${SPECIFIC_BREED_IMAGE}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-18T21:27:25.102957" elapsed="0.000110"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:25.101960" elapsed="0.001141"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:24.619542" elapsed="0.483722"/>
+</test>
+<test id="s1-t5" name="QA-005 - Get X Random Dog Images" line="30">
+<kw name="Return X Dogs Breeds Images" owner="keywords">
+<kw name="GET" owner="RequestsLibrary">
+<msg time="2025-05-18T21:27:25.626754" level="INFO">GET Request : url=https://dog.ceo/api/breeds/image/random/3 
+ path_url=/api/breeds/image/random/3 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-05-18T21:27:25.626996" level="INFO">GET Response : url=https://dog.ceo/api/breeds/image/random/3 
+ status=200, reason=OK 
+ headers={'Date': 'Mon, 19 May 2025 00:28:09 GMT', 'Content-Type': 'application/json', 'Content-Length': '171', 'Connection': 'keep-alive', 'Server': 'cloudflare', 'X-Powered-By': 'PHP/8.1.32', 'Cache-Control': 'no-cache, private', 'Access-Control-Allow-Origin': '*', 'Content-Encoding': 'gzip', 'Via': '1.1 varnish (Varnish/6.3), 1.1 varnish (Varnish/6.3)', 'X-Cache-Hits': '0', 'X-Cache': 'MISS', 'Accept-Ranges': 'bytes', 'Age': '0', 'Vary': 'Accept-Encoding', 'Nel': '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}', 'Cf-Cache-Status': 'DYNAMIC', 'Report-To': '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=M2qBlC2JFP3jye6B3NQ50JofCU9j3I58fRe%2F2wLveV%2BAleqC%2FsIaYHvMQ415xUvreM3kjG8fGfNEXnMVBcGzDDCbxgOpJdjEsVJnB67uGQZQk7I%3D"}]}', 'CF-RAY': '941f78f9df6ba5c3-GRU', 'alt-svc': 'h3=":443"; ma=86400'} 
+ body={"message":["https:\/\/images.dog.ceo\/breeds\/sheepdog-indian\/Himalayan_Sheepdog.jpg","https:\/\/images.dog.ceo\/breeds\/bullterrier-staffordshire\/n02093256_5139.jpg","https:\/\/images.dog.ceo\/breeds\/husky\/n02110185_6105.jpg"],"status":"success"} 
+ </msg>
+<msg time="2025-05-18T21:27:25.627914" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}/${GET_QT_BREEDS_IMAGE}</arg>
+<doc>Sends a GET request.</doc>
+<status status="PASS" start="2025-05-18T21:27:25.104106" elapsed="0.523902"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-18T21:27:25.628775" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<arg>${response}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-18T21:27:25.628362" elapsed="0.000516"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:25.103930" elapsed="0.525092"/>
+</kw>
+<kw name="Validate 200 Response" owner="keywords">
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-05-18T21:27:25.692228" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-05-18T21:27:25.691664" elapsed="0.000642"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-18T21:27:25.692534" level="INFO">Status Code 200 Validated.</msg>
+<arg>Status Code 200 Validated.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-18T21:27:25.692441" elapsed="0.000131"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:25.691304" elapsed="0.001324"/>
+</kw>
+<kw name="Verify If X URLs' Images Are Listed" owner="keywords">
+<kw name="Convert To Dictionary" owner="Collections">
+<msg time="2025-05-18T21:27:25.697037" level="INFO">${x_breeds} = {'message': ['https://images.dog.ceo/breeds/sheepdog-indian/Himalayan_Sheepdog.jpg', 'https://images.dog.ceo/breeds/bullterrier-staffordshire/n02093256_5139.jpg', 'https://images.dog.ceo/breeds/husky/...</msg>
+<var>${x_breeds}</var>
+<arg>${response.json()}</arg>
+<doc>Converts the given ``item`` to a Python ``dict`` type.</doc>
+<status status="PASS" start="2025-05-18T21:27:25.696434" elapsed="0.000637"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2025-05-18T21:27:25.697624" level="INFO">Length is 3.</msg>
+<msg time="2025-05-18T21:27:25.697698" level="INFO">${actual_count} = 3</msg>
+<var>${actual_count}</var>
+<arg>${x_breeds['message']}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2025-05-18T21:27:25.697191" elapsed="0.000528"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-05-18T21:27:25.697969" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${actual_count}</arg>
+<arg>${QUANTITY_BREEDS}</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-05-18T21:27:25.697824" elapsed="0.000200"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-18T21:27:25.698267" level="INFO">3 Random Dog URL Images Listed From {'message': ['https://images.dog.ceo/breeds/sheepdog-indian/Himalayan_Sheepdog.jpg', 'https://images.dog.ceo/breeds/bullterrier-staffordshire/n02093256_5139.jpg', 'https://images.dog.ceo/breeds/husky/n02110185_6105.jpg'], 'status': 'success'}.</msg>
+<arg>${QUANTITY_BREEDS} Random Dog URL Images Listed From ${x_breeds}.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-18T21:27:25.698128" elapsed="0.000178"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:25.696093" elapsed="0.002270"/>
+</kw>
+<status status="PASS" start="2025-05-18T21:27:25.103605" elapsed="0.595167"/>
+</test>
+<doc>This file contains Batch 1 Test Cases (text-only). Code and Keywords defined separately.</doc>
+<status status="PASS" start="2025-05-18T21:27:22.697405" elapsed="3.002888"/>
+</suite>
+<statistics>
+<total>
+<stat pass="5" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Batch1 Tests" id="s1" pass="5" fail="0" skip="0">Batch1 Tests</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
